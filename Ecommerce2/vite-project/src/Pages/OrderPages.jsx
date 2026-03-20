@@ -1,5 +1,6 @@
 import './Order.css'
 import { Header } from '../components/Header'
+import { Link } from 'react-router'
 export function OrderPages() {
     return (
         <>
@@ -53,11 +54,11 @@ export function OrderPages() {
                             </div>
 
                             <div className="product-actions">
-                                <a href="/tracking">
+                                <Link to="/tracking">
                                     <button className="track-package-button button-secondary">
                                         Track package
                                     </button>
-                                </a>
+                                </Link>
                             </div>
 
                             <div className="product-image-container">
