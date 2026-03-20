@@ -1,7 +1,14 @@
 import './Homepage.css'
 import { Header } from '../components/Header'
 import { products } from '../../starting-code/ecommerce-project-main/data/products'
+import axios from'axios'
 export function Homepage() {
+
+    axios.get('http://localhost:3000/api/products').
+    then((response)=>{
+        console.log(response.data)
+    })
+
     return (
 
         <>
@@ -13,7 +20,6 @@ export function Homepage() {
                 <div className="products-grid">
 
                     {products.map((product) => {
-                                    console.log(product.rating.stars);
 
                         return (
                             
