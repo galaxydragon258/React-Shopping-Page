@@ -4,17 +4,22 @@ import { useEffect,useState } from 'react'
 import axios from'axios'
 
 export function Homepage() {
-    const [products,setProduct] = useState([])
+    const [products,setProduct] = useState([]);
+    const [cartItems,setCartItems] = useState([]);
     
     useEffect(()=>{
-        axios.get('http://localhost:3000/api/products').
+        axios.get('/api/products').
         then((response)=>{
             setProduct(response.data)
         })
 
-    },[])
 
-    
+        axios.get('/api/cart-items').
+        then((response)=>{
+            setCartItems(response.data)
+        })
+
+    },[])
 
     return (
 
@@ -22,7 +27,7 @@ export function Homepage() {
 
             <link rel="icon" type="image/svg+xml" href="home-favicon.png" />
 
-            <Header />
+            <Header cart={cartItems}/>
             <div  className="home-page">
                 <div className="products-grid">
 
