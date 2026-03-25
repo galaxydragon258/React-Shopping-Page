@@ -2,23 +2,18 @@ import './Homepage.css'
 import { Header } from '../components/Header'
 import { useEffect,useState } from 'react'
 import axios from'axios'
+import { formatMoney } from './utils/money'
 
-export function Homepage() {
+export function Homepage({cart}) {
     const [products,setProduct] = useState([]);
-    const [cartItems,setCartItems] = useState([]);
-    
+        
     useEffect(()=>{
         axios.get('/api/products').
         then((response)=>{
-            setProduct(response.data)
+            setProduct(response.data)  
+           
         })
-
-
-        axios.get('/api/cart-items').
-        then((response)=>{
-            setCartItems(response.data)
-        })
-
+      
     },[])
 
     return (
@@ -27,7 +22,7 @@ export function Homepage() {
 
             <link rel="icon" type="image/svg+xml" href="home-favicon.png" />
 
-            <Header cart={cartItems}/>
+            <Header cart={cart}/>
             <div  className="home-page">
                 <div className="products-grid">
 
@@ -54,7 +49,7 @@ export function Homepage() {
                                 </div>
 
                                 <div className="product-price">
-                                    ${(product.priceCents/100).toFixed(2)}
+                                    ${formatMoney(product.priceCents)}
                                 </div>
 
                                 <div className="product-quantity-container">
