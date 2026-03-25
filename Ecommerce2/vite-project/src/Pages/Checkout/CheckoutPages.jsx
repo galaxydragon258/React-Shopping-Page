@@ -36,7 +36,7 @@ export function CheckoutPage({ cart }) {
 
                 <div className="checkout-grid">
                     <div className="order-summary">
-                        {cart.map((cartItems) => {
+                        {deliveryOptions &&cart.map((cartItems) => {
                             const selectedDeliveryDate = deliveryOptions.find((deliveryOption) => {
                                 return deliveryOption.id === cartItems.deliveryOptionId
                             })
