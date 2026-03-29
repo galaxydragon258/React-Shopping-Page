@@ -1,6 +1,7 @@
 import './checkout-header.css'
 import { Link } from 'react-router'
 export function CheckoutHeader(){
+    
     return(
         <div className="checkout-header">
             <div className="header-content">

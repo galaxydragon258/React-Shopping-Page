@@ -2,7 +2,7 @@ import './Order.css'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { Header } from '../components/Header'
+import { Header } from '../../components/Header'
 import { Link } from 'react-router'
 
 export function OrderPages({ cart }) {
@@ -59,9 +59,12 @@ export function OrderPages({ cart }) {
                                 </div>
 
                                 {data.map((ProductData) => {
+                                    
                                    
                                     return (
-                                        <div className="order-details-grid">
+                                        <div 
+                                        key={ProductData.productId}
+                                        className="order-details-grid">
                                             <div className="product-image-container">
                                                 <img src={`${ProductData.product.image}`} />
                                             </div>
