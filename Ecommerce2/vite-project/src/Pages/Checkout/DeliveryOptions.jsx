@@ -8,7 +8,6 @@ export function DeliveryOptions({cartItems,deliveryOptions}){
 
                                     if (DeliveryOptions.priceCents > 0) {
                                         priceString = `${formatMoney(DeliveryOptions.priceCents)} -Shipping`
-                                        console.log('true')
                                     }
 
                                     return (

@@ -5,16 +5,8 @@ import { useState, useEffect } from 'react'
 import { Header } from '../../components/Header'
 import { Link } from 'react-router'
 
-export function OrderPages({ cart }) {
-    const [order, setOrder] = useState([])
-
-    useEffect(() => {
-        axios.get('/api/orders?expand=products').
-            then((response) => {
-                setOrder(response.data)
-            })
-    }, [])
-
+export function OrderPages({ cart,order,setOrder }) {
+   
     return (
         <>
             <Header cart={cart} />
@@ -24,15 +16,11 @@ export function OrderPages({ cart }) {
 
                 <div className="orders-grid">
 
-
-
-
                     {order && order.map((Orders) => {
                         const data = Orders.products.map((Product) => {
                             return Product
                         })
 
-                        console.log(data)
                         return (
 
 
@@ -59,7 +47,6 @@ export function OrderPages({ cart }) {
                                 </div>
 
                                 {data.map((ProductData) => {
-                                    
                                    
                                     return (
                                         <div 
@@ -86,11 +73,11 @@ export function OrderPages({ cart }) {
                                             </div>
 
                                             <div className="product-actions">
-                                                <a href="/tracking">
+                                                <Link to={`/tracking/${Orders.id}/${ProductData.productId}`}>
                                                     <button className="track-package-button button-secondary">
                                                         Track package
                                                     </button>
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     )
@@ -98,7 +85,6 @@ export function OrderPages({ cart }) {
                                 })}
 
                             </div>
-
                         )
                     })}
 

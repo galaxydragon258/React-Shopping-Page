@@ -11,20 +11,28 @@ import './App.css'
 
 function App() {
     const [cart,setCart] = useState([]);
+    const [order, setOrder] = useState([])
 
     useEffect(()=>{
-      axios.get('/api/cart-items?expand=product').
-      then((response)=>{
-        setCart(response.data)
-      })
+      const getCartItems = async()=>{
+            const response = await axios.get('/api/cart-items?expand=product')
+            setCart(response.data)
+    }
+      const fetchOrder = async()=>{
+            const response  = await axios.get('/api/orders?expand=products')
+            setOrder(response.data)
+        }
+    fetchOrder()
+    getCartItems()
     },[])
+
 
   return (
   <Routes>
     <Route path="/"  element={<Homepage cart={cart}/>}/>
     <Route path='checkout'  element={<CheckoutPage cart={cart}/>}/>
-    <Route path='orders' element={<OrderPages cart={cart}/>}/>
-    <Route path='tracking' element={<Tracking/>}/>
+    <Route path='orders' element={<OrderPages order={order} setOrder={setOrder }cart={cart}/>}/>
+    <Route path='tracking/:orderId/:productId' element={<Tracking order={order}/>}/>
     <Route path='notfound' element={<NotFound/>}/>
   </Routes>
 
