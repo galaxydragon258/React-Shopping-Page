@@ -24,7 +24,7 @@ export function CheckoutPage({ cart }) {
 
             
     }, [])
-
+    console.log(cart)
     return (
         <>
             <title>CheckoutPage</title>
