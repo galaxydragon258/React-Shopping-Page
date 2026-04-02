@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 import { DeliveryOptions } from "./DeliveryOptions"
 import { formatMoney } from "../utils/money"
+import axios from 'axios'
 export function OrderSummary({ cart, deliveryOptions,getCartItems,getPaymentSummary }) {
     return (
 
@@ -12,6 +13,11 @@ export function OrderSummary({ cart, deliveryOptions,getCartItems,getPaymentSumm
             )
             
                 const formattedDelivery = selectedDeliveryDate ?.estimatedDeliveryTimeMs?dayjs(selectedDeliveryDate.estimatedDeliveryTimeMs).format('dddd, MMMM D'): "No Delivery Date";
+
+                const deleteCartItem = async()=>{
+                    await axios.delete(`/api/cart-items/${cartItems.productId}`);
+                    await getCartItems();
+                }
 
                 return (
                     <div
@@ -41,7 +47,9 @@ export function OrderSummary({ cart, deliveryOptions,getCartItems,getPaymentSumm
                                     <span className="update-quantity-link link-primary">
                                         Update
                                     </span>
-                                    <span className="delete-quantity-link link-primary">
+                                    <span className="delete-quantity-link link-primary"
+                                        onClick={deleteCartItem}
+                                    >
                                         Delete
                                     </span>
                                 </div>
