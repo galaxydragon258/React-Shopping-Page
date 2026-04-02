@@ -1,13 +1,23 @@
 import { formatMoney } from "./utils/money"
 import axios from "axios"
 import { useState } from "react"
-export function Product({ getCartItems, products }) {
 
+export function Product({ getCartItems, products }) {
+        const [quantity, setQuantity] = useState(1);
+        const [check,setCheck] = useState(false);
     return (
         <>
             {
                 products.map((product) => {
-                    const [quantity, setQuantity] = useState(1)
+                
+
+                    const test =  ()=>{
+                        setCheck(true)
+                        setTimeout(()=>{
+                            setCheck(false)
+                           
+                        },2000)
+                    }
 
                     return (
 
@@ -55,9 +65,12 @@ export function Product({ getCartItems, products }) {
 
                             <div className="product-spacer"></div>
 
-                            <div className="added-to-cart">
+                            <div className="added-to-cart"
+                            style={{opacity: check ? 1 : 0}}
+                            >
                                 <img src="images/icons/checkmark.png" />
-                                Added
+                                    {check &&   <span>Added to Cart</span>}
+                            
                             </div>
 
                             <button className="add-to-cart-button button-primary"
@@ -66,9 +79,10 @@ export function Product({ getCartItems, products }) {
                                         productId: product.id,
                                         quantity
                                     });
+                                     test();
                                     await getCartItems()
+                                    
                                 }}
-
                             >
                                 Add to Cart
                             </button>

@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react'
 import { Header } from '../../components/Header'
 import { Link } from 'react-router'
 
-export function OrderPages({ cart,order,setOrder }) {
+export function OrderPages({ cart,order,getCartItems}) {
+    console.log(order)
    
     return (
         <>
@@ -21,6 +22,7 @@ export function OrderPages({ cart,order,setOrder }) {
                             return Product
                         })
 
+        
                         return (
 
 
@@ -47,7 +49,17 @@ export function OrderPages({ cart,order,setOrder }) {
                                 </div>
 
                                 {data.map((ProductData) => {
-                                   
+                                    
+                                    const addToCard = async()=>{
+                                        await axios.post('/api/cart-items',{
+                                            productId : ProductData.productId,
+                                            quantity: 1
+
+                                        })
+                                        await getCartItems();
+
+                                    }
+
                                     return (
                                         <div 
                                         key={ProductData.productId}
@@ -68,7 +80,9 @@ export function OrderPages({ cart,order,setOrder }) {
                                                 </div>
                                                 <button className="buy-again-button button-primary">
                                                     <img className="buy-again-icon" src="images/icons/buy-again.png" />
-                                                    <span className="buy-again-message">Add to Cart</span>
+                                                    <span className="buy-again-message"
+                                                    onClick={addToCard}
+                                                    >Add to Cart</span>
                                                 </button>
                                             </div>
 

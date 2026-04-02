@@ -18,6 +18,11 @@ function App() {
         setCart(response.data)
     }
 
+      const resetData = async()=>{
+        await axios.post('/api/reset')
+        await getCartItems()
+    }
+
     useEffect(()=>{ 
  
       const fetchOrder = async()=>{
@@ -26,6 +31,7 @@ function App() {
         }
     fetchOrder()
     getCartItems()
+    resetData();
     },[])
 
 
@@ -33,7 +39,7 @@ function App() {
   <Routes>
     <Route path="/"  element={<Homepage cart={cart} getCartItems={getCartItems}/>}/>
     <Route path='checkout'  element={<CheckoutPage cart={cart} getCartItems={getCartItems}/>}/>
-    <Route path='orders' element={<OrderPages order={order} setOrder={setOrder }cart={cart}/>}/>
+    <Route path='orders' element={<OrderPages order={order} setOrder={setOrder }cart={cart} getCartItems={getCartItems}/>}/>
     <Route path='tracking/:orderId/:productId' element={<Tracking order={order}/>}/>
     <Route path='notfound' element={<NotFound/>}/>
   </Routes>
