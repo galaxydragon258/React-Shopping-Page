@@ -1,6 +1,8 @@
 import { formatMoney } from "../utils/money"
 import dayjs from "dayjs"
-export function DeliveryOptions({cartItems,deliveryOptions}){
+import axios from "axios"
+import { PaymentSummary } from "./PaymentSummary"
+export function DeliveryOptions({cartItems,deliveryOptions,getCartItems}){
     return(
         <>
               {deliveryOptions.map((DeliveryOptions) => {
@@ -10,6 +12,21 @@ export function DeliveryOptions({cartItems,deliveryOptions}){
                                         priceString = `${formatMoney(DeliveryOptions.priceCents)} -Shipping`
                                     }
 
+                                    const updateDeliveryOptions = async()=>{
+                                       await axios.put(`/api/cart-items/${cartItems.productId}`,
+                                            {
+                                                deliveryOptionId: DeliveryOptions.id
+                                            }
+                                            
+                                        )   
+                                           await getCartItems();
+                                        
+                                           console.log("testing")
+
+                                    }   
+                                    
+
+
                                     return (
                                         <div
                                             key={DeliveryOptions.id}
@@ -17,7 +34,10 @@ export function DeliveryOptions({cartItems,deliveryOptions}){
                                             <input type="radio"
                                                 checked={cartItems.deliveryOptionId === DeliveryOptions.id}
                                                 className="delivery-option-input"
-                                                name={`delivery-option-${cartItems.productId}`} />
+                                                name={`delivery-option-${cartItems.productId}`}
+                                                onClick={updateDeliveryOptions}
+                                                onChange={()=>{}}
+                                                />
                                             <div>
                                                 <div className="delivery-option-date">
                                                     {dayjs(DeliveryOptions.estimatedDeliveryTimeMs).format('dddd,MMMM D')}
